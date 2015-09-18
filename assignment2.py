@@ -106,7 +106,10 @@ class astar:
 				#print
 			#	print "Locations Evaluated: "
 				break
-
+				
+	def time_to_print(self, node):
+		print "This is my path: "
+		
 
 
 mymap = getMap(sys.argv[1])
@@ -114,8 +117,3 @@ searched = astar(mymap, int(sys.argv[2]))
 searched.starsearch()
 #print "searched"
 	
-
-
-
-	
-
