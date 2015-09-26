@@ -30,7 +30,7 @@ def getMap(arg):
 	for x in reversed(range(0,len(mymap))):
 		for y in range(0,len(mymap[x])):
 			mymap[x][y] = Node(x,y,int(mymap[x][y]))
-	#		print mymap[x][y].x,mymap[x][y].y, mymap[x][y].typeN
+			#print mymap[x][y].x,mymap[x][y].y, mymap[x][y].typeN
 		n = n+1
 	return mymap
 
@@ -40,9 +40,11 @@ def newCost(n, node):
 class astar:
 	
 	def __init__(self, mymap, heuristic):
-		self.Open = []
-		self.Close = []
+		#self.Open = []
+		self.Open = {}
+		self.Close = {}
 		self.mymap = mymap
+		self.length = len(mymap)
 		self.goalx = len(mymap[1])-1#measures the x length
 		self.goaly = len(mymap)-1
 		if heuristic == 1:
@@ -74,23 +76,28 @@ class astar:
 	#A* search!	
 	def starsearch(self):
 		node = self.mymap[0][0]
-		self.Open.append(node)
-		while self.Open != []:
+		#self.Open.append(node)
+		val = node.f 
+		self.Open[node] = val
+		while self.Open != {}:
 			#find node.f that is the smallest
 			min_val = 10000000
-			for val in self.Open:
+			for value in self.Open:
 			#	print "In Open: ", val.x, val.y, val.f
-				if val.f <= min_val and val.typeN != 2:
-					node = val
-					min_val = val.f
+				if self.Open[value] <= min_val:
+					node = value
+					min_val = self.Open[value]
 			#		print "min_val", min_val
 			#print "remove: ", node.f
-			self.Open.remove(node)
+			#self.Open.remove(node)
+			del self.Open[node]
 			if node.x != self.goalx and node.y != self.goaly:
-			#	print "*********************"
-			#	print "currently at: ", node.x, node.y
-			#	print "*********************"
-				self.Close.append(node)
+				print "*********************"
+				print "currently at: ", node.x, node.y
+				print "There is a: ", node.typeN
+				print "*********************"
+				#self.Close.append(node)
+				self.Close[node] = node.f
 				nodes_adj = self.getAdj(node)
 				for n in nodes_adj:
 					if n.typeN != 2 and not(n in self.Close):
@@ -100,15 +107,20 @@ class astar:
 								n.f = node.f + newCost(n, node)
 						else:
 							if n.typeN != 2:
-								self.Open.append(n)
-			#					print "adding to open: ", n.x, n.y
+								#self.Open.append(n)
+								self.Open[n] = n.f
+								#print "adding to open: ", n.x, n.y
 			else:
-				#print
-			#	print "Locations Evaluated: "
+				print
+				print "Locations Evaluated: "
+				self.time_to_print()
 				break
 				
-	def time_to_print(self, node):
+	def time_to_print(self):
 		print "This is my path: "
+		for key in self.Open:
+			print key.x, " ",key.y
+			print
 		
 
 
