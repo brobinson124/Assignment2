@@ -94,30 +94,30 @@ class astar:
 			#self.Open.remove(node)
 			del self.Open[node]
 			if node.x == self.goal.x and node.y == self.goal.y:
-				print "goal: ", self.goal.x, " ",self.goal.y
-				print "current: ", node.x, node.y
-				print "p of current: ", node.p.x, node.p.y
+				#print "goal: ", self.goal.x, " ",self.goal.y
+				#print "current: ", node.x, node.y
+				#print "p of current: ", node.p.x, node.p.y
 				#time_to_print
-				print "Locations evaluated: ", locations
+				#print "Locations evaluated: ", locations
 				self.time_to_print(node)
 				break
 				
-			print "*********************"
-			print "Adding to close: (", node.x, ", ",node.y,")"
-			print "*********************"
+			#print "*********************"
+			#print "Adding to close: (", node.x, ", ",node.y,")"
+			#print "*********************"
 			
 			self.Close[node] = node.f
 			node_adj = self.getAdj(node)
 			for n in node_adj:
 				if (n.typeN != 2 and not(n in self.Close)):
-					n.setParent(node,self.h)#calculates the f value
-				if not(n in self.Open) or (n.f > (node.f + newCost(n,node))):
-					n.f = node.f + newCost(n,node)
-					#n.setparent(node,self.h)
-					if not(n in self.Open):
-						#n.setparent(node,self.h)
-						self.Open[n] = n.f
-						#print "adding to open: ", n.x, n.y
+					#n.setParent(node,self.h)#calculates the f value
+					if not(n in self.Open) or (n.f > (node.f + newCost(n,node))):
+						n.f = node.f + newCost(n,node)
+						n.setParent(node,self.h)
+						if not(n in self.Open):
+							#n.setParent(node,self.h)
+							self.Open[n] = n.f
+							#print "adding to open: ", n.x, n.y
 	
 	def time_to_print(self, nextNode):
 		print "This is my path: "
