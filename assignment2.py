@@ -2,6 +2,7 @@
 #Assignment 2
 #Worked with Mario Alanis 
 import sys
+import math
 
 class Node:
   
@@ -67,7 +68,7 @@ class astar:
 	
 	def pyth(self, x, y):
 		#use the a^2 + b^2 = c^2 theory!
-		return ((math.sqrt(x-self.goal.x)**2) + (math.sqrt(y-self.goal.y)**2))
+		return math.sqrt((((x-self.goal.x)**2) + ((y-self.goal.y)**2)))
 		
 	#A* search!	
 	def starsearch(self):
